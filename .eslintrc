@@ -5,6 +5,9 @@
         "prettier/react"
     ],
     "rules": {
+        "react/jsx-props-no-spreading": 0,
+        "import/prefer-default-export": 0,
+        "import/no-unresolved": 1,
         "react/jsx-filename-extension": [ 
             1, 
             { "extensions": [
