@@ -3,8 +3,8 @@ export const routes = {
   notes: '/notes',
   twitters: '/twitters',
   articles: '/articles',
-  note: '/note/:id',
-  twitter: '/twitter/:id',
-  article: '/article/:id',
+  note: '/notes/:id',
+  twitter: '/twitters/:id',
+  article: '/articles/:id',
   login: '/login',
 };

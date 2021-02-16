@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
@@ -68,24 +69,33 @@ const StyledLinkButton = styled.a`
   transform: translateY(-50%);
 `;
 
-const Card = ({ cardType, title, created, twitterName, articleUrl, content }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      <StyledHeading>{title}</StyledHeading>
-      <DateInfo>{created}</DateInfo>
-      {cardType === 'twitters' && (
-        <StyledAvatar src={`https://unavatar.now.sh/twitter${twitterName}`} />
-      )}
-      {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>{content}</Paragraph>
-      <Button secondary>Remove</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+const Card = ({ id, cardType, title, created, twitterName, articleUrl, content }) => {
+  const [redirect, setRedirect] = useState(false);
+
+  if (redirect) {
+    return <Redirect to={`${cardType}/${id}`} />;
+  }
+
+  return (
+    <StyledWrapper onClick={() => setRedirect(true)}>
+      <InnerWrapper activeColor={cardType}>
+        <StyledHeading>{title}</StyledHeading>
+        <DateInfo>{created}</DateInfo>
+        {cardType === 'twitters' && (
+          <StyledAvatar src={`https://unavatar.now.sh/twitter${twitterName}`} />
+        )}
+        {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+      </InnerWrapper>
+      <InnerWrapper flex>
+        <Paragraph>{content}</Paragraph>
+        <Button secondary>Remove</Button>
+      </InnerWrapper>
+    </StyledWrapper>
+  );
+};
 
 Card.propTypes = {
+  id: PropTypes.string.isRequired,
   cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
