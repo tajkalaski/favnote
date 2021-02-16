@@ -6,6 +6,8 @@ import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import linkIcon from 'assets/icons/link.svg';
+import { removeItem as removeItemAction } from 'actions';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
   min-height: 380px;
@@ -69,16 +71,20 @@ const StyledLinkButton = styled.a`
   transform: translateY(-50%);
 `;
 
-const Card = ({ id, cardType, title, created, twitterName, articleUrl, content }) => {
+const Card = ({ id, cardType, title, created, twitterName, articleUrl, content, removeItem }) => {
   const [redirect, setRedirect] = useState(false);
+
+  const handleCardClick = () => {
+    setRedirect(true);
+  };
 
   if (redirect) {
     return <Redirect to={`${cardType}/${id}`} />;
   }
 
   return (
-    <StyledWrapper onClick={() => setRedirect(true)}>
-      <InnerWrapper activeColor={cardType}>
+    <StyledWrapper>
+      <InnerWrapper onClick={handleCardClick} activeColor={cardType}>
         <StyledHeading>{title}</StyledHeading>
         <DateInfo>{created}</DateInfo>
         {cardType === 'twitters' && (
@@ -88,7 +94,9 @@ const Card = ({ id, cardType, title, created, twitterName, articleUrl, content }
       </InnerWrapper>
       <InnerWrapper flex>
         <Paragraph>{content}</Paragraph>
-        <Button secondary>Remove</Button>
+        <Button onClick={() => removeItem(cardType, id)} secondary>
+          Remove
+        </Button>
       </InnerWrapper>
     </StyledWrapper>
   );
@@ -102,6 +110,7 @@ Card.propTypes = {
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
+  removeItem: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
@@ -110,4 +119,8 @@ Card.defaultProps = {
   articleUrl: null,
 };
 
-export default Card;
+const mapDispatchToProps = (dispatch) => ({
+  removeItem: (itemType, id) => dispatch(removeItemAction(itemType, id)),
+});
+
+export default connect(null, mapDispatchToProps)(Card);
