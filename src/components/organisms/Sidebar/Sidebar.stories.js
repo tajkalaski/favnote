@@ -1,16 +1,16 @@
 // YourComponent.stories.js
 
 import React from 'react';
-import Paragraph from './Paragraph';
+import Sidebar from './Sidebar';
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Design System/Atoms/Paragraph',
-  component: Paragraph,
+  title: 'Design System/Organisms/Sidebar',
+  component: Sidebar,
 };
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-// const Template = (args) => <Button {...args}></Button>;
+// const Template = (args) => <Sidebar {...args}></Sidebar>;
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const Primary = (args) => <Paragraph {...args}>Hello, Do something Tajsonik</Paragraph>;
+export const Primary = (args) => <Sidebar {...args} />;

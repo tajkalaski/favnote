@@ -5,7 +5,7 @@ import Heading from './Heading';
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Heading',
+  title: 'Design System/Atoms/Heading',
   component: Heading,
 };
 

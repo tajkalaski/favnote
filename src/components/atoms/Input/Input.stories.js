@@ -5,7 +5,7 @@ import Input from './Input';
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Input',
+  title: 'Design System/Atoms/Input',
   component: Input,
 };
 

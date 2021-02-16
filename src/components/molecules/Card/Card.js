@@ -47,7 +47,7 @@ const StyledHeading = styled(Heading)`
 const StyledAvatar = styled.img`
   width: 86px;
   height: 86px;
-  border: 5px solid ${({ theme }) => theme.twitter};
+  border: 5px solid ${({ theme }) => theme.twitters};
   border-radius: 50px;
   position: absolute;
   right: 25px;
@@ -68,32 +68,36 @@ const StyledLinkButton = styled.a`
   transform: translateY(-50%);
 `;
 
-const Card = ({ cardType }) => (
+const Card = ({ cardType, title, created, twitterName, articleUrl, content }) => (
   <StyledWrapper>
     <InnerWrapper activeColor={cardType}>
-      <StyledHeading>Hello Tajsonik</StyledHeading>
-      <DateInfo>10 days ago</DateInfo>
-      {cardType === 'twitter' && <StyledAvatar src="https://unavatar.now.sh/twitter/hello_roman" />}
-      {cardType === 'article' && <StyledLinkButton href="youtube.com" />}
+      <StyledHeading>{title}</StyledHeading>
+      <DateInfo>{created}</DateInfo>
+      {cardType === 'twitters' && (
+        <StyledAvatar src={`https://unavatar.now.sh/twitter${twitterName}`} />
+      )}
+      {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
     </InnerWrapper>
     <InnerWrapper flex>
-      <Paragraph>
-        Laboris ullamco veniam excepteur occaecat. Non officia labore consequat nisi reprehenderit
-        consequat aliqua dolor dolor. Occaecat sit duis amet sit exercitation minim proident labore
-        commodo est sit in commodo ipsum. Ut reprehenderit minim anim dolor excepteur. Amet esse
-        exercitation excepteur ea nostrud esse magna. Irure id sunt deserunt adipisicing tempor.
-      </Paragraph>
+      <Paragraph>{content}</Paragraph>
       <Button secondary>Remove</Button>
     </InnerWrapper>
   </StyledWrapper>
 );
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  twitterName: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
-  cardType: 'note',
+  cardType: 'notes',
+  twitterName: null,
+  articleUrl: null,
 };
 
 export default Card;

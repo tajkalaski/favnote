@@ -1,3 +1,4 @@
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'theme/theme';
 
@@ -10,5 +11,10 @@ export const decorators = [
     <ThemeProvider theme={theme}>
       <Story />
     </ThemeProvider>
+  ),
+  (Story) => (
+    <MemoryRouter>
+      <Story />
+    </MemoryRouter>
   ),
 ];

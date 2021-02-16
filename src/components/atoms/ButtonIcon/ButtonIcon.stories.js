@@ -15,12 +15,12 @@ const YellowBg = styled.div`
   align-items: center;
   width: 200px;
   height: 200px;
-  background: ${({ theme }) => theme.note};
+  background: ${({ theme }) => theme.notes};
 `;
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Button Icon',
+  title: 'Design System/Atoms/Button Icon',
   component: ButtonIcon,
   decorators: [
     (Story) => (

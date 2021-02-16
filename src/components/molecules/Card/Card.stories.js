@@ -3,7 +3,7 @@ import Card from './Card';
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Card',
+  title: 'Design System/Molecules/Card',
   component: Card,
 };
 
