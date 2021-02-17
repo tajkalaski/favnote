@@ -1,6 +1,6 @@
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import PageContext from 'context';
 import styled from 'styled-components';
 import bulbIcon from 'assets/icons/bulb.svg';
 import logoutIcon from 'assets/icons/logout.svg';
@@ -45,30 +45,26 @@ const StyledLinksList = styled.ul`
   list-style: none;
 `;
 
-const Sidebar = ({ pageType }) => (
-  <StyledWrapper activeColor={pageType}>
-    <StyledLogoLink to="/" />
-    <StyledLinksList>
-      <li>
-        <ButtonIcon as={NavLink} to="/notes" icon={penIcon} activeClassName="active" />
-      </li>
-      <li>
-        <ButtonIcon as={NavLink} to="/twitters" icon={twitterIcon} activeClassName="active" />
-      </li>
-      <li>
-        <ButtonIcon as={NavLink} to="/articles" icon={bulbIcon} activeClassName="active" />
-      </li>
-    </StyledLinksList>
-    <StyledLogoutButton as={NavLink} to="/login" icon={logoutIcon} />
-  </StyledWrapper>
-);
+const Sidebar = () => {
+  const pageContext = useContext(PageContext);
 
-Sidebar.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-};
-
-Sidebar.defaultProps = {
-  pageType: 'notes',
+  return (
+    <StyledWrapper activeColor={pageContext}>
+      <StyledLogoLink to="/" />
+      <StyledLinksList>
+        <li>
+          <ButtonIcon as={NavLink} to="/notes" icon={penIcon} activeClassName="active" />
+        </li>
+        <li>
+          <ButtonIcon as={NavLink} to="/twitters" icon={twitterIcon} activeClassName="active" />
+        </li>
+        <li>
+          <ButtonIcon as={NavLink} to="/articles" icon={bulbIcon} activeClassName="active" />
+        </li>
+      </StyledLinksList>
+      <StyledLogoutButton as={NavLink} to="/login" icon={logoutIcon} />
+    </StyledWrapper>
+  );
 };
 
 export default Sidebar;
