@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import PageContext from 'context';
 import { Redirect } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
@@ -71,30 +72,31 @@ const StyledLinkButton = styled.a`
   transform: translateY(-50%);
 `;
 
-const Card = ({ id, cardType, title, created, twitterName, articleUrl, content, removeItem }) => {
+const Card = ({ id, title, created, twitterName, articleUrl, content, removeItem }) => {
   const [redirect, setRedirect] = useState(false);
+  const pageContext = useContext(PageContext);
 
   const handleCardClick = () => {
     setRedirect(true);
   };
 
   if (redirect) {
-    return <Redirect to={`${cardType}/${id}`} />;
+    return <Redirect to={`${pageContext}/${id}`} />;
   }
 
   return (
     <StyledWrapper>
-      <InnerWrapper onClick={handleCardClick} activeColor={cardType}>
+      <InnerWrapper onClick={handleCardClick} activeColor={pageContext}>
         <StyledHeading>{title}</StyledHeading>
         <DateInfo>{created}</DateInfo>
-        {cardType === 'twitters' && (
+        {pageContext === 'twitters' && (
           <StyledAvatar src={`https://unavatar.now.sh/twitter${twitterName}`} />
         )}
-        {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+        {pageContext === 'articles' && <StyledLinkButton href={articleUrl} />}
       </InnerWrapper>
       <InnerWrapper flex>
         <Paragraph>{content}</Paragraph>
-        <Button onClick={() => removeItem(cardType, id)} secondary>
+        <Button onClick={() => removeItem(pageContext, id)} secondary>
           Remove
         </Button>
       </InnerWrapper>
@@ -104,7 +106,6 @@ const Card = ({ id, cardType, title, created, twitterName, articleUrl, content, 
 
 Card.propTypes = {
   id: PropTypes.string.isRequired,
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
@@ -114,7 +115,6 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'notes',
   twitterName: null,
   articleUrl: null,
 };

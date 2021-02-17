@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PageContext from 'context';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -51,29 +52,32 @@ const StyledImage = styled.img`
   height: 120px;
   border-radius: 50%;
 `;
-const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitterName }) => (
-  <UserPageTemplate pageType={pageType}>
-    <StyledWrapper>
-      <StyledPageHeader>
-        <StyledHeading big as="h1">
-          {title}
-        </StyledHeading>
-        <StyledParagraph>{created}</StyledParagraph>
-      </StyledPageHeader>
-      <Paragraph>{content}</Paragraph>
-      {pageType === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
-      {pageType === 'twitters' && (
-        <StyledImage alt={title} src={`https://avatars.io/twitter/${twitterName}`} />
-      )}
-      <Button as={Link} to={`/${pageType}`} activeColor={pageType}>
-        save / close
-      </Button>
-    </StyledWrapper>
-  </UserPageTemplate>
-);
+const DetailsTemplate = ({ title, created, content, articleUrl, twitterName }) => {
+  const pageContext = useContext(PageContext);
+
+  return (
+    <UserPageTemplate>
+      <StyledWrapper>
+        <StyledPageHeader>
+          <StyledHeading big as="h1">
+            {title}
+          </StyledHeading>
+          <StyledParagraph>{created}</StyledParagraph>
+        </StyledPageHeader>
+        <Paragraph>{content}</Paragraph>
+        {pageContext === 'articles' && <StyledLink href={articleUrl}>Open article</StyledLink>}
+        {pageContext === 'twitters' && (
+          <StyledImage alt={title} src={`https://avatars.io/twitter/${twitterName}`} />
+        )}
+        <Button as={Link} to={`/${pageContext}`} activeColor={pageContext}>
+          save / close
+        </Button>
+      </StyledWrapper>
+    </UserPageTemplate>
+  );
+};
 
 DetailsTemplate.propTypes = {
-  pageType: PropTypes.string.isRequired,
   title: PropTypes.string,
   created: PropTypes.string,
   content: PropTypes.string,
